@@ -1,3 +1,133 @@
+// ==========================================
+// QUEUE DATA - EDIT THIS SECTION EASILY
+// ==========================================
+
+// Set to false if you want to pause taking new commissions
+const acceptingCommissions = false;
+
+// Maximum items to show initially (3 by default)
+const MAX_VISIBLE = 3;
+
+// Active commissions (in progress)
+const activeQueue = [
+    // Example: { name: "PlayerName", size: "2x2", status: "Building" }
+    // Remove the examples below and add your own:
+    { name: "Jabe", size: "2x3", status: "Building" },
+    { name: "Lexii", size: "5x4", status: "Building" },
+];
+
+// Recently completed commissions
+const completedQueue = [
+    // Example: { name: "PlayerName", size: "2x2", completedDate: "Jan 15" }
+    // Remove the examples below and add your own:
+    { name: "Isha", size: "2x2", completedDate: "March 12" },
+    { name: "Jinx", size: "2x3", completedDate: "February 26" },
+];
+
+// ==========================================
+// END OF QUEUE DATA
+// ==========================================
+
+// Queue visibility state
+let queueExpanded = {
+    active: false,
+    completed: false
+};
+
+// Render Queue Function
+function renderQueue() {
+    // Update status indicator
+    const statusEl = document.getElementById('queueStatus');
+    if (acceptingCommissions) {
+        statusEl.className = 'queue-status open';
+        statusEl.innerHTML = '<i class="fas fa-check-circle"></i><span>Accepting Commissions</span>';
+    } else {
+        statusEl.className = 'queue-status closed';
+        statusEl.innerHTML = '<i class="fas fa-pause-circle"></i><span>Queue Full</span>';
+    }
+
+    // Render active queue
+    renderQueueSection('active', activeQueue, 'activeQueue', 'activeCount', 'activeShowMore');
+    
+    // Render completed queue
+    renderQueueSection('completed', completedQueue, 'completedQueue', 'completedCount', 'completedShowMore');
+
+    // Update timestamp
+    const now = new Date();
+    document.getElementById('lastUpdated').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+// Render individual queue section
+function renderQueueSection(type, data, listId, countId, buttonId) {
+    const list = document.getElementById(listId);
+    const count = document.getElementById(countId);
+    const showMoreBtn = document.getElementById(buttonId);
+    
+    count.textContent = data.length;
+    
+    if (data.length === 0) {
+        list.innerHTML = '<li class="queue-empty">No items in this queue</li>';
+        showMoreBtn.style.display = 'none';
+        return;
+    }
+
+    // Determine how many items to show
+    const expanded = queueExpanded[type];
+    const visibleCount = expanded ? data.length : Math.min(MAX_VISIBLE, data.length);
+    const hasMore = data.length > MAX_VISIBLE;
+
+    // Generate HTML for items
+    const itemsHtml = data.map((item, index) => {
+        const isVisible = index < visibleCount;
+        const hiddenClass = isVisible ? '' : 'hidden';
+        
+        if (type === 'active') {
+            return `
+                <li class="queue-item ${hiddenClass}" data-index="${index}">
+                    <div class="queue-item-info">
+                        <div class="queue-avatar">${item.name.charAt(0).toUpperCase()}</div>
+                        <div class="queue-item-details">
+                            <h4>${item.name}</h4>
+                            <p>Size: ${item.size} • #${index + 1} in queue</p>
+                        </div>
+                    </div>
+                    <span class="queue-badge active">${item.status}</span>
+                </li>
+            `;
+        } else {
+            return `
+                <li class="queue-item ${hiddenClass}" data-index="${index}">
+                    <div class="queue-item-info">
+                        <div class="queue-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">${item.name.charAt(0).toUpperCase()}</div>
+                        <div class="queue-item-details">
+                            <h4>${item.name}</h4>
+                            <p>Size: ${item.size} • Completed ${item.completedDate}</p>
+                        </div>
+                    </div>
+                    <span class="queue-badge completed">Done</span>
+                </li>
+            `;
+        }
+    }).join('');
+
+    list.innerHTML = itemsHtml;
+
+    // Show/hide the Show More button
+    if (hasMore) {
+        showMoreBtn.style.display = 'flex';
+        const btnText = showMoreBtn.querySelector('span');
+        btnText.textContent = expanded ? 'Show Less' : `Show ${data.length - MAX_VISIBLE} More`;
+        showMoreBtn.classList.toggle('expanded', expanded);
+    } else {
+        showMoreBtn.style.display = 'none';
+    }
+}
+
+// Toggle queue expansion
+function toggleQueue(type) {
+    queueExpanded[type] = !queueExpanded[type];
+    renderQueue();
+}
 
 // Intersection Observer for scroll animations
 const observerOptions = {
@@ -82,3 +212,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// Initialize queue on page load
+renderQueue();

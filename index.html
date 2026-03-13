@@ -32,13 +32,14 @@
                     <li><a href="#sizes">Sizes</a></li>
                     <li><a href="#faq">FAQ</a></li>
                     <li><a href="#contact">Contact</a></li>
+                    <li><a href="#queue">Queue</a></li>
                 </ul>
                 <a href="https://ko-fi.com/niladoze" target="_blank" class="btn-donate">
                     <i class="fas fa-heart"></i>
                     Donate
                 </a>
                 <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars"></i>
+                    <i class="fas fa-bars"></i>5
                 </button>
             </div>
         </div>
@@ -53,8 +54,9 @@
                 <li><a href="#sizes" onclick="toggleMobileMenu()">Sizes</a></li>
                 <li><a href="#faq" onclick="toggleMobileMenu()">FAQ</a></li>
                 <li><a href="#contact" onclick="toggleMobileMenu()">Contact</a></li>
+                <li><a href="#queue" onclick="toggleMobileMenu()">Queue</a></li>
             </ul>
-            <a href="https://ko-fi.com/yourusername" target="_blank" class="btn-donate">
+            <a href="https://ko-fi.com/niladoze" target="_blank" class="btn-donate">
                 <i class="fas fa-heart"></i>
                 Donate
             </a>
@@ -449,6 +451,65 @@
             <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
                 If you like my work and want to support future projects, donations are greatly appreciated! Every contribution helps me keep creating high-quality map art.
             </p>
+        </div>
+    </section>
+
+    <!-- Queue Section - NEW -->
+    <section class="queue" id="queue">
+        <div class="queue-container">
+            <div class="queue-header">
+                <h2>
+                    <i class="fas fa-list-ol"></i>
+                    Commission Queue
+                </h2>
+                <div class="queue-status open" id="queueStatus">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Accepting Commissions</span>
+                </div>
+            </div>
+
+            <div class="queue-lists">
+                <!-- Active Queue -->
+                <div class="queue-section">
+                    <div class="queue-section-header">
+                        <div class="queue-section-title">
+                            <i class="fas fa-clock" style="color: var(--queue-active);"></i>
+                            In Progress
+                        </div>
+                        <span class="queue-count" id="activeCount">0</span>
+                    </div>
+                    <ul class="queue-list" id="activeQueue">
+                        <!-- Items will be inserted here by JavaScript -->
+                    </ul>
+                    <button class="queue-show-more" id="activeShowMore" onclick="toggleQueue('active')" style="display: none;">
+                        <span>Show More</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+
+                <!-- Completed Queue -->
+                <div class="queue-section">
+                    <div class="queue-section-header">
+                        <div class="queue-section-title">
+                            <i class="fas fa-check" style="color: var(--queue-completed);"></i>
+                            Recently Completed
+                        </div>
+                        <span class="queue-count" id="completedCount">0</span>
+                    </div>
+                    <ul class="queue-list" id="completedQueue">
+                        <!-- Items will be inserted here by JavaScript -->
+                    </ul>
+                    <button class="queue-show-more" id="completedShowMore" onclick="toggleQueue('completed')" style="display: none;">
+                        <span>Show More</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="queue-note">
+                <i class="fas fa-info-circle"></i>
+                Queue is updated manually. Last updated: <span id="lastUpdated">Just now</span>
+            </div>
         </div>
     </section>
 
