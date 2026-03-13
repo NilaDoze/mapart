@@ -14,6 +14,8 @@
             --donate: #ff6b6b;
             --donate-hover: #ff8585;
             --donate-glow: rgba(255, 107, 107, 0.3);
+            --queue-active: #f59e0b;
+            --queue-completed: #10b981;
         }
 
         * {
