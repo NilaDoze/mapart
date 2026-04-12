@@ -12,7 +12,7 @@ const MAX_VISIBLE = 3;
 const activeQueue = [
     // Example: { name: "PlayerName", size: "2x2", status: "Building" }
     // Remove the examples below and add your own:
-    { name: "Jabe", size: "2x3", status: "Building 32%" },
+    { name: "Jabe", size: "2x3", status: "Building 50%" },
     { name: "Lexii", size: "6x4", status: "Building 5%" },
     { name: "Sodium", size: "2x3", status: "Pending" },
     { name: "fillz", size: "2x2", status: "Pending" },
